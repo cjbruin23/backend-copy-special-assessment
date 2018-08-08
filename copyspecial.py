@@ -19,11 +19,18 @@ import argparse
 # +++your code here+++
 # Write functions and modify main() to call them
 
+def get_special_paths(dir):
+    print dir
+    for cfile in os.listdir(dir):
+        print cfile
+    return
+    
 def main():
     # This snippet will help you get started with the argparse module.
     parser = argparse.ArgumentParser()
     parser.add_argument('--todir', help='dest dir for special files')
     parser.add_argument('--tozip', help='dest zipfile for special files')
+    parser.add_argument('dir', help='prints current directories special files')
     # TODO need an argument to pick up 'from_dir'
     args = parser.parse_args()
 
@@ -36,6 +43,10 @@ def main():
 
     # +++your code here+++
     # Call your functions
+    print args
+    if args.dir == '.':
+        get_special_paths('.')
+    return
   
 if __name__ == "__main__":
     main()
