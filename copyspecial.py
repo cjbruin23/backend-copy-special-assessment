@@ -20,11 +20,25 @@ import argparse
 # Write functions and modify main() to call them
 
 def get_special_paths(dir):
-    print dir
+    special_array = []
+
     for cfile in os.listdir(dir):
-        print cfile
-    return
-    
+        found = re.search(r'__\w+__', cfile)
+        if found:
+            special_array.append(os.path.abspath(cfile))
+    print "\n".join(special_array)
+    return special_array
+
+def copy_to(paths, dir):
+    new_dest = dir
+    if not os.path.exists(new_dest):
+        os.makedirs(new_dest)
+        print 'made new directory'
+    for cfile in paths:
+        shutil.copy(cfile, new_dest)
+    return 
+
+
 def main():
     # This snippet will help you get started with the argparse module.
     parser = argparse.ArgumentParser()
@@ -44,8 +58,15 @@ def main():
     # +++your code here+++
     # Call your functions
     print args
-    if args.dir == '.':
-        get_special_paths('.')
+    if not args:
+        parser.print_usage()
+        sys.exit(1)
+    
+    special_array = get_special_paths(args.dir)
+    if args.todir:
+        copy_to(special_array, args.todir)
+
+        
     return
   
 if __name__ == "__main__":

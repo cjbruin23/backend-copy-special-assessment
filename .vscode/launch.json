@@ -5,6 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Current File with Args",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args": [
+                ".",
+                "--todir", "./tmp_folder/foo"
+            ]
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
