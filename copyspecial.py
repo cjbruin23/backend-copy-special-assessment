@@ -29,14 +29,22 @@ def get_special_paths(dir):
     print "\n".join(special_array)
     return special_array
 
-def copy_to(paths, dir):
-    new_dest = dir
-    if not os.path.exists(new_dest):
-        os.makedirs(new_dest)
-        print 'made new directory'
+# New dir should have a '.' for creating new folders
+# from current directory
+def copy_to(paths, new_dir):
+    if not os.path.exists(new_dir):
+        os.makedirs(new_dir)
     for cfile in paths:
-        shutil.copy(cfile, new_dest)
+        shutil.copy(cfile, new_dir)
     return 
+
+def zip_to(paths, new_dir):
+    print "Command I'm going to do:"
+    cmd_to_run = "zip -j " + new_dir
+    for a_path in paths:
+        cmd_to_run += " " + a_path 
+    print cmd_to_run
+    os.system(cmd_to_run)
 
 
 def main():
@@ -57,14 +65,17 @@ def main():
 
     # +++your code here+++
     # Call your functions
-    print args
     if not args:
         parser.print_usage()
         sys.exit(1)
     
     special_array = get_special_paths(args.dir)
+
     if args.todir:
         copy_to(special_array, args.todir)
+    if args.tozip:
+       zip_to(special_array, args.tozip)
+    
 
         
     return
